@@ -1,3 +1,5 @@
+from warnings import filters
+
 import telebot
 from telebot import types
 
@@ -35,10 +37,13 @@ def get_text_messages(message):
 
     elif message.text == 'Знаю размер':
         bot.send_message(message.from_user.id, 'Укажи размеры в поле ввода текста в Миллиметрах ( ширина/высота )', parse_mode='Markdown')
-            @bot.message_handler(content_types=['text'])
-            def after_text(message):
-                if message.text == '500':
-                    msg = bot.send_message(message.from_user.id, 'Введите ', reply_markup=keyboard1)
-                    bot.register_next_step_handler(msg, after_text_2)
 
-bot.polling(none_stop=True, interval=0) #обязательная для работы бота часть
+        def query_text(inline_query):
+            bot.reply_to(message, message.text)
+        # тут нужно получить  него инт значание, можно сделать двумя вводами или одним, но с разделителем
+            bot.reply_to(message, "Бла бла бла вернулось")
+        # обрабатываем ответы с условием
+
+
+bot.polling(none_stop=True, interval=0) #не отключаемся после ответа
+
