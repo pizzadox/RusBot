@@ -3,6 +3,9 @@ from telebot import types
 
 bot = telebot.TeleBot('5882698434:AAEQiUxsNuWmO3tesY7IU1fE-t9fPIc9xCQ')
 
+import re
+szPtrn = re.compile(r'размер \d{3,4}\s\d{3,4}$')
+
 @bot.message_handler(commands=['start'])
 def start(message):
 
@@ -32,6 +35,11 @@ def get_text_messages(message):
 
     elif message.text == 'Советы':
         bot.send_message(message.from_user.id, 'Подробно про советы по ' + '[ссылке](https://oknarus.com/#services)', parse_mode='Markdown')
+
+    elif re.match(szPtrn, message.text): # размер число1 число2 (3-4х значные
+        # разбираем строку , вытаскиваем два числа price = (ширина+высота)*2* цена_бруска + ширина * высота* цена полотна.
+        #но надо брать формулу от заказчика
+        bot.send_message(message.from_user.id, 'Расчётная стоимость составит')
 
     elif message.text == 'Знаю размер':
         bot.send_message(message.from_user.id, 'Укажи размеры в поле ввода текста в Миллиметрах ( ширина/высота )', parse_mode='Markdown')
