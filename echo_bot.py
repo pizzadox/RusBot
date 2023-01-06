@@ -35,7 +35,8 @@ def get_text_messages(message):
 
     elif message.text == 'Знаю размер':
         bot.send_message(message.from_user.id, 'Укажи размеры в поле ввода текста в Миллиметрах ( ширина/высота )', parse_mode='Markdown')
-# вот сюда впиши код что бы получил сообщение оне менее 100 и не более 1500 значение заинти int()        @bot.message_handler(func=lambda message: True)
+# вот сюда впиши код что бы получил сообщение оне менее 100 и не более 1500 значение заинти int()
+        @bot.message_handler(func=lambda message: True)
         def echo_message(message):
             bot.reply_to(message, message.text)
         # тут нужно получить  него инт значание, можно сделать двумя вводами или одним, но с разделителем
