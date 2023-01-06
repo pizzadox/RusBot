@@ -39,7 +39,10 @@ def get_text_messages(message):
     elif re.match(szPtrn, message.text): # размер число1 число2 (3-4х значные
         # разбираем строку , вытаскиваем два числа price = (ширина+высота)*2* цена_бруска + ширина * высота* цена полотна.
         #но надо брать формулу от заказчика
-        bot.send_message(message.from_user.id, 'Расчётная стоимость составит')
+        words = message.text.split()
+        a=int(words[1])
+        b=int(words[2])
+        bot.send_message(message.from_user.id, 'Расчётная стоимость составит ', a*b + 2*(a+b)) # формула вообще из базы должна браться
 
     elif message.text == 'Знаю размер':
         bot.send_message(message.from_user.id, 'Укажи размеры в поле ввода текста в Миллиметрах ( ширина/высота )', parse_mode='Markdown')
