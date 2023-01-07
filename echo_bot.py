@@ -2,10 +2,8 @@ import telebot
 from telebot import types
 
 # Подкючаем БД
-import setup
 
 # Подключаем модуль обработки ( не факт что тут, так как будeт скорее всего отдельным файлом расписано для каждого вида профиля и типа конструкии
-import okno
 
 bot = telebot.TeleBot('5882698434:AAEQiUxsNuWmO3tesY7IU1fE-t9fPIc9xCQ')
 

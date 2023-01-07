@@ -3,5 +3,5 @@
 #conn = sqlite3.connect('orders.db')
 #cur = conn.cursor()
 #cur.execute("""INSERT INTO constuctions(id, name, product)
-#   VALUES(1, 'Krauss', 'KRDW45');""")
+#   VALUES(2, 'Alumark', 'S44');""")
 #conn.commit()
