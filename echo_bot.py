@@ -49,15 +49,9 @@ def get_text_messages(message):
         a=int(words[1])
         b=int(words[2])
         bot.send_message(message.from_user.id, 'Расчётная стоимость составит: ' +  str(a*b + 2*(a+b)+1)) # формула вообще из базы должна браться
-        bot.send_message(message.from_user.id, 'Расчет запчастей: ', okno.rama_h)
-
+        # Вот тут вывести
     elif message.text == 'Знаю размер':
         bot.send_message(message.from_user.id, 'Укажи размеры в поле ввода текста в Миллиметрах ( ширина/высота )', parse_mode='Markdown')
-# вот сюда впиши код что бы получил сообщение оне менее 100 и не более 1500 значение заинти int()
-        @bot.message_handler(func=lambda message: True)
-        def echo_message(message):
-            bot.reply_to(message, message.text)
-        # тут нужно получить  него инт значание, можно сделать двумя вводами или одним, но с разделителем
 
 
         # обрабатываем ответы с условием
