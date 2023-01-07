@@ -1,5 +1,7 @@
 import telebot
 from telebot import types
+# Подключаем модуль обработки ( не факт что тут, так как будт отдельным файлом расписано для каждого вида профиля и типа конструкии
+f = open('okno.py')
 
 bot = telebot.TeleBot('5882698434:AAEQiUxsNuWmO3tesY7IU1fE-t9fPIc9xCQ')
 
@@ -37,7 +39,7 @@ def get_text_messages(message):
         bot.send_message(message.from_user.id, 'Подробно про советы по ' + '[ссылке](https://oknarus.com/#services)', parse_mode='Markdown')
 
     elif szPtrn.match( message.text): # размер число1 число2 (3-4х значные
-        # разбираем строку , вытаскиваем два числа price = (ширина+высота)*2* цена_бруска + ширина * высота* цена полотна.
+        # разбираем строку , вытаскиваем два числа price = (ширина+высота)*2* цена_профиля + ширина * высота* цена полотна.
         #но надо брать формулу от заказчика
         words = message.text.split()
         a=int(words[1])
