@@ -1,7 +1,7 @@
 import echo_bot
 
 # Определяем переменные конструкции
-# Следуюие данные берем у клиента
+# Следуюие данные берем у клиента в файле echo_bot
 height = echo_bot.a
 width = echo_bot.b
 rama_profile_h = 6000
