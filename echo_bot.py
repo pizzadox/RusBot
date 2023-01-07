@@ -1,7 +1,8 @@
 import telebot
 from telebot import types
-# Подключаем модуль обработки ( не факт что тут, так как будт отдельным файлом расписано для каждого вида профиля и типа конструкии
-f = open('okno.py')
+
+# Подключаем модуль обработки ( не факт что тут, так как будeт скорее всего отдельным файлом расписано для каждого вида профиля и типа конструкии
+import okno
 
 bot = telebot.TeleBot('5882698434:AAEQiUxsNuWmO3tesY7IU1fE-t9fPIc9xCQ')
 
@@ -45,6 +46,7 @@ def get_text_messages(message):
         a=int(words[1])
         b=int(words[2])
         bot.send_message(message.from_user.id, 'Расчётная стоимость составит: ' +  str(a*b + 2*(a+b)+1)) # формула вообще из базы должна браться
+        bot.send_message(message.from_user.id, 'Расчет запчастей: ', okno.rama_h)
 
     elif message.text == 'Знаю размер':
         bot.send_message(message.from_user.id, 'Укажи размеры в поле ввода текста в Миллиметрах ( ширина/высота )', parse_mode='Markdown')

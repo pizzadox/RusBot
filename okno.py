@@ -1,7 +1,9 @@
+import echo_bot
+
 # Определяем переменные конструкции
 # Следуюие данные берем у клиента
-height = 1000
-width = 900
+height = echo_bot.a
+width = echo_bot.b
 rama_profile_h = 6000
 shtapik_profile_h = 6000
 # Определяем фурнитуру для конструкции
