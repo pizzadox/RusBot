@@ -1,56 +1,50 @@
-# Import required modules
+# Импортим необходимые модули
 import csv
 import sqlite3
 
-# Connecting to the geeks database
+# Коннектимс к БД
 connection = sqlite3.connect('../DBase/PriceList/alumark_s44.db')
 
-# Creating a cursor object to execute
-# SQL queries on a database table
+# Создаем cursor
 cursor = connection.cursor()
 
-# Table Definition
-create_table = """DROP TABLE aluark_s44(
+# Архитектура таблицы
+create_table = """DROP TABLE aluark_s44 (
                 price INTEGER PRIMARY KEY AUTOINCREMENT,
                 kod_tov TEXT NOT NULL,
                 art TEXT NOT NULL,
                 name TEXT NOT NULL);
                 """
 
-# Creating the table into our
-# database
+# Создаем таблицу в БД
 cursor.execute(create_table)
 
-# Opening the person-records.csv file
+# Открываем CSV
 file = open('../DBase/input/alumark_s44.csv')
 
-# Reading the contents of the
-# person-records.csv file
+# Читаем CSV
 contents = csv.reader(file)
 
-# SQL query to insert data into the
-# person table
-
+# SQL запрос
 
 insert_records = "INSERT INTO aluark_s44 (price, kod_tov, art, name) VALUES(?, ?, ?, ?)"
 
-# Importing the contents of the file
-# into our person table
+# Импортируемданные в таблицу базы
 cursor.executemany(insert_records, contents)
 
-# SQL query to retrieve all data from
-# the person table To verify that the
-# data of the csv file has been successfully
-# inserted into the table
+# SQL-запрос для извлечения всех данных из
+# таблицы aluark_s44, чтобы убедиться, что
+# данные csv-файла были успешно
+# вставлены в таблицу
 select_all = "SELECT * FROM aluark_s44"
 rows = cursor.execute(select_all).fetchall()
 
-# Output to the console screen
+# Вывод в консоль
 for r in rows:
     print(r)
 
-# Committing the changes
+# Коммитим изминения
 connection.commit()
 
-# closing the database connection
+# Закрываем соединение
 connection.close()
