@@ -1,9 +1,9 @@
-import echo_bot
+from echo_bot import ddd
 
 # Определяем переменные конструкции
 # Следуюие данные берем у клиента в файле echo_bot
-height = echo_bot.a
-width = echo_bot.b
+height = 100
+width = 200
 rama_profile_h = 6000
 shtapik_profile_h = 6000
 # Определяем фурнитуру для конструкции
