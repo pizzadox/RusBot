@@ -1,9 +1,9 @@
-from echo_bot import ddd
+from echo_bot import height, width
 
 # Определяем переменные конструкции
 # Следуюие данные берем у клиента в файле echo_bot
-height = 100
-width = 200
+# height = 100
+# width = 200
 rama_profile_h = 6000
 shtapik_profile_h = 6000
 # Определяем фурнитуру для конструкции
@@ -23,7 +23,8 @@ vent_zaglyshka = vent_zaglyshka * 2
 uplotnitel_1 = height * 2 + width * 2 - 328
 uplotnitel_2 = height * 2 + width * 2 - 288
 filling_h = width - 66
-filling_l = height - 66
+filling_l = hight - 66
+window_filling = [filling_l, filling_h]
 # Считаем необходимые материалы
 rama_profile = (rama_l + rama_h) / rama_profile_h
 shtapik_profile = (shtapik_l + shtapik_h) / shtapik_profile_h
