@@ -11,7 +11,7 @@ cur.execute("""CREATE TABLE IF NOT EXISTS items(
    id INT PRIMARY KEY,
    name TEXT,
    construction TEXT,
-   price int);
+   price INT);
 """)
 
 conn.commit()
