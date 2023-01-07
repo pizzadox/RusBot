@@ -48,7 +48,7 @@ def get_text_messages(message):
         b=int(words[2])
         # from okno import window_filling
         bot.send_message(message.from_user.id, 'Расчётная стоимость составит: ' +  str(a*b + 2*(a+b)+1)) # формула вообще из базы должна браться
-        bot.send_message(message.from_user.id, window_filling)
+        # bot.send_message(message.from_user.id, window_filling)
         # Вот тут вывести
     elif message.text == 'Знаю размер':
         bot.send_message(message.from_user.id, 'Укажи размеры в поле ввода текста в Миллиметрах ( ширина/высота )', parse_mode='Markdown')
