@@ -2,7 +2,7 @@
 import csv
 import sqlite3
 
-# Коннектимс к БД
+# Коннектимся к БД
 connection = sqlite3.connect('../DBase/PriceList/alumark_s44.db')
 
 # Создаем cursor
