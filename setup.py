@@ -7,4 +7,10 @@ cur.execute("""CREATE TABLE IF NOT EXISTS constuctions(
    name TEXT,
    product TEXT);
 """)
+cur.execute("""CREATE TABLE IF NOT EXISTS items(
+   id INT PRIMARY KEY,
+   name TEXT,
+   construction TEXT,
+   price int);
+""")
 conn.commit()
