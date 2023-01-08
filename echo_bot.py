@@ -10,6 +10,8 @@ bot = telebot.TeleBot('5882698434:AAEQiUxsNuWmO3tesY7IU1fE-t9fPIc9xCQ')
 import re
 szPtrn = re.compile(r'размер \d{3,4}\s\d{3,4}$')
 
+import okno #формулы от заказчика
+
 @bot.message_handler(commands=['start'])
 def start(message):
 
@@ -46,9 +48,10 @@ def get_text_messages(message):
         words = message.text.split()
         a=int(words[1])
         b=int(words[2])
-        # from okno import window_filling
-        bot.send_message(message.from_user.id, 'Расчётная стоимость составит: ' +  str(a*b + 2*(a+b)+1)) # формула вообще из базы должна браться
-        # bot.send_message(message.from_user.id, window_filling)
+        otvet = okno.answer(a,b)
+        # from okno import window_filling on begin this file
+        #bot.send_message(message.from_user.id, 'Расчётная стоимость составит: ' +  str(a*b + 2*(a+b)+1)) # формула вообще из базы должна браться
+        bot.send_message(message.from_user.id,  "___\n"  + otvet)
         # Вот тут вывести
     elif message.text == 'Знаю размер':
         bot.send_message(message.from_user.id, 'Укажи размеры в поле ввода текста в Миллиметрах ( ширина/высота )', parse_mode='Markdown')
