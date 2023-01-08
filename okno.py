@@ -30,8 +30,22 @@ rama_profile = (rama_l + rama_h) / rama_profile_h
 shtapik_profile = (shtapik_l + shtapik_h) / shtapik_profile_h
 
 def answer(width, height):
+    # Определяем фурнитуру для конструкции
+    suhar_rama = 1; suhar_mini = 1; podkladka_pod_steklo = 1; vent_zaglyshka = 1
     #расчёт
-    rama_l = height * 2;rama_h = width * 2
+    rama_l = height * 2; rama_h = width * 2
+    shtapik_l = width - 52; shtapik_h = height - 98
+    suhar_rama = suhar_rama * 4
+    suhar_mini = suhar_mini * 4
+    podkladka_pod_steklo = podkladka_pod_steklo * 4
+    vent_zaglyshka = vent_zaglyshka * 2
+    uplotnitel_1 = height * 2 + width * 2 - 328
+    uplotnitel_2 = height * 2 + width * 2 - 288
+    filling_h = width - 66
+    filling_l = height - 66
+    window_filling = [filling_l, filling_h]
+    rama_profile = (rama_l + rama_h) / rama_profile_h
+    shtapik_profile = (shtapik_l + shtapik_h) / shtapik_profile_h
     # собираем текст ответа
     ans =  'Расчет материалов :\n'
     ans += '- Профиль :\n'
