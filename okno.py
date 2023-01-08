@@ -28,19 +28,28 @@ window_filling = [filling_l, filling_h]
 # Считаем необходимые материалы
 rama_profile = (rama_l + rama_h) / rama_profile_h
 shtapik_profile = (shtapik_l + shtapik_h) / shtapik_profile_h
-# Выводим расчет
-print('Расчет материалов :')
-print('- Профиль :')
-print(' - Рамный профиль ( 121010 ): ', "%.2f" % rama_profile, 'профиля длинной :', rama_profile_h)
-print(' - Штапик ( 125060 ): ', "%.2f" % shtapik_profile, 'профиля длинной :', shtapik_profile_h)
-print('- Комплектующие :')
-print(' - Сухарь угловой ( 721014 ): ', suhar_rama, 'шт.')
-print(' - Сухарь установочный ( 723020 ): ', suhar_mini, 'шт.')
-print(' - Заглушка вентиляционная ( 727180 ): ', vent_zaglyshka, 'шт.')
-print(' - Подкладка под стекло ( 727010 ): ', podkladka_pod_steklo, 'шт.')
-print('- Резина :')
-print(' - Уплонитель ( 521010 ): ', uplotnitel_1, 'мм.')
-print(' - Уплонитель ( 522020 ): ', uplotnitel_2, 'мм.')
-print('- Стекло :')
-print(' - Заполнение ( 6мм ): ', filling_l,'*',filling_h,  'мм')
-print(window_filling)
+
+def answer(width, height):
+    #расчёт
+    rama_l = height * 2;rama_h = width * 2
+    # собираем текст ответа
+    ans =  'Расчет материалов :\n'
+    ans += '- Профиль :\n'
+    ans += ' - Рамный профиль ( 121010 ): ' + "%.2f " % rama_profile  + 'профиля длинной : ' + "%.0f " % rama_profile_h
+    ans += '\n - Штапик ( 125060 ): ' + "%.2f" % shtapik_profile + ' профиля длинной :' + "%.0f " % shtapik_profile_h
+    ans += '\n - Комплектующие :\n'
+    ans += ' - Сухарь угловой ( 721014 ): ' + "%.0f " % suhar_rama + 'шт.\n'
+    ans += ' - Сухарь установочный ( 723020 ): ' + " %.0f "  % suhar_mini +  'шт.\n'
+    ans += ' - Заглушка вентиляционная ( 727180 ): ' +  "%.0f " % vent_zaglyshka + 'шт.\n'
+    ans += ' - Подкладка под стекло ( 727010 ): ' + "%.0f " % podkladka_pod_steklo + 'шт.\n'
+    ans += '- Резина :\n'
+    ans += ' - Уплонитель ( 521010 ): ' + "%.0f мм \n" % uplotnitel_1
+    ans += ' - Уплонитель ( 522020 ): ' + "%.0f мм \n" % uplotnitel_2
+    ans += '- Стекло :\n'
+    ans += ' - Заполнение ( 6мм ): '+ " %.0f * " % filling_l + "%.0f мм \n" % filling_h
+    ans += "%.0f *" % window_filling[0] + "%.0f \n" % window_filling[1]
+    return ans
+
+if __name__ == '__main__':
+    print (answer(width,height))
+
