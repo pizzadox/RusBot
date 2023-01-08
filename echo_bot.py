@@ -8,7 +8,7 @@ from telebot import types
 bot = telebot.TeleBot('5882698434:AAEQiUxsNuWmO3tesY7IU1fE-t9fPIc9xCQ')
 
 import re
-szPtrn = re.compile(r'размер \d{3,4}\s\d{3,4}$')
+szPtrn = re.compile(r'размер \d{3,4}(\s+|/)\d{3,4}$')
 
 import okno #формулы от заказчика
 
@@ -54,7 +54,7 @@ def get_text_messages(message):
         bot.send_message(message.from_user.id,  "___\n"  + otvet)
         # Вот тут вывести
     elif message.text == 'Знаю размер':
-        bot.send_message(message.from_user.id, 'Укажи размеры в поле ввода текста в Миллиметрах ( ширина/высота )', parse_mode='Markdown')
+        bot.send_message(message.from_user.id, 'Укажи размеры в поле ввода текста в Миллиметрах (размер  ширина/высота )', parse_mode='Markdown')
 
 
         # обрабатываем ответы с условием
