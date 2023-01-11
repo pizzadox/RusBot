@@ -65,7 +65,8 @@ def get_text_messages(message):
             width = num; bState = "know_width"
         elif bState == 'know_width': # ширину знаем. теперь высоту
             height = num; bState ='know_size'
-            bot.send_message(message.from_user.id)
+            otvet = okno.answer(width,height)
+            bot.send_message(message.from_user.id,otvet)
     elif message.text == 'Знаю размер':
         if bState != 'know_size':
             bot.send_message(message.from_user.id, 'Укажи размеры в поле ввода текста в Миллиметрах (размер  ширина/высота )', parse_mode='Markdown')
