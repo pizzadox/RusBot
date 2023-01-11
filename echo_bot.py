@@ -10,7 +10,7 @@ bot = telebot.TeleBot('5882698434:AAEQiUxsNuWmO3tesY7IU1fE-t9fPIc9xCQ')
 import re # формат ввода размера. "размер x y" или "размер x/y"
 szPtrn = re.compile(r'размер \d{3,4}(\s+|/)\d{3,4}$')
 isNum  = re.compile(r'^\d{3,4}$')
-bState = "" #состоние. пока строкой, но надо это обьявлять по другому
+bState = "start" #состоние. пока строкой, но надо это обьявлять по другому
 bStates = {} # bStates[userid]
 width=0; height =0 # перенести в стуктура данных конкретного пользователя
 import okno #формулы от заказчика
@@ -69,7 +69,7 @@ def get_text_messages(message):
             bState = "get_size"
         else:
             otvet = okno.answer(width, height)
-            bot.send_message(message.from_user.id, answer)
+            bot.send_message(message.from_user.id, otvet)
             bState = '' # сброс на всякий случай
 
 
