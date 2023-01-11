@@ -1,6 +1,3 @@
-bot.polling(none_stop=True, interval=0) #не отключаемся после ответа
-
-
 import telebot
 from telebot import types
 
@@ -77,3 +74,4 @@ def get_text_messages(message):
 
 
         # обрабатываем ответы с условием
+bot.polling(none_stop=True, interval=0) #не отключаемся после ответа
