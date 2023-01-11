@@ -25,6 +25,9 @@ def start(message):
 
 @bot.message_handler(content_types=['text'])
 def get_text_messages(message):
+    global bState
+    global width
+    global height
  #bState=States[user_id]
     if message.text == '👋 Поздороваться':
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True) #создание новых кнопок
