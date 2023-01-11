@@ -1,3 +1,6 @@
+bot.polling(none_stop=True, interval=0) #не отключаемся после ответа
+
+
 import telebot
 from telebot import types
 
@@ -7,9 +10,12 @@ from telebot import types
 
 bot = telebot.TeleBot('5882698434:AAEQiUxsNuWmO3tesY7IU1fE-t9fPIc9xCQ')
 
-import re
+import re # формат ввода размера. "размер x y" или "размер x/y"
 szPtrn = re.compile(r'размер \d{3,4}(\s+|/)\d{3,4}$')
-
+isNum  = re.compile(r'^\d{3,4}$')
+bState = "" #состоние. пока строкой, но надо это обьявлять по другому
+bStates = {} # bStates[userid]
+width=0; height =0 # перенести в стуктура данных конкретного пользователя
 import okno #формулы от заказчика
 
 @bot.message_handler(commands=['start'])
@@ -22,7 +28,7 @@ def start(message):
 
 @bot.message_handler(content_types=['text'])
 def get_text_messages(message):
-
+ #bState=States[user_id]
     if message.text == '👋 Поздороваться':
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True) #создание новых кнопок
         btn1 = types.KeyboardButton('Нужно Окно')
@@ -50,14 +56,24 @@ def get_text_messages(message):
         b=int(words[2])
         otvet = okno.answer(a,b)
         # from okno import window_filling on begin this file
-        #bot.send_message(message.from_user.id, 'Расчётная стоимость составит: ' +  str(a*b + 2*(a+b)+1)) # формула вообще из базы должна браться
         bot.send_message(message.from_user.id,  "___\n"  + otvet)
         # Вот тут вывести
+    elif isNum.match( message.text):
+        num = int(message.text) # здесь точно число
+        if bState == 'get_size': # Сначала ширина
+            bot.send_message(message.from_user.id, "ширина составила %d мм. Теперь введите высоту" % num)
+            width = num; bState = "know_width"
+        elif bState == 'know_width': # ширину знаем. теперь высоту
+            height = num; bState ='know_size'
+            bot.send_message(message.from_user.id)
     elif message.text == 'Знаю размер':
-        bot.send_message(message.from_user.id, 'Укажи размеры в поле ввода текста в Миллиметрах (размер  ширина/высота )', parse_mode='Markdown')
+        if bState != 'know_size':
+            bot.send_message(message.from_user.id, 'Укажи размеры в поле ввода текста в Миллиметрах (размер  ширина/высота )', parse_mode='Markdown')
+            bState = "get_size"
+        else:
+            otvet = okno.answer(width, height)
+            bot.send_message(message.from_user.id, answer)
+            bState = '' # сброс на всякий случай
 
 
         # обрабатываем ответы с условием
-
-
-bot.polling(none_stop=True, interval=0) #не отключаемся после ответа
