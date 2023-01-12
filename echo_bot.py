@@ -38,11 +38,11 @@ def start(message):
 
 @bot.message_handler(content_types=['text'])
 def get_text_messages(message):
-    if message.from_user.id in bStates.keys():
-        b = bStates[message.from_user.id] # ссылка, не копия, по идее. т.е. пункт списка изменться должен
-    else:
+    if message.from_user.id not in bStates.keys():
         bStates[message.from_user.id] = BotState()
         print (message.from_user.id)  #dbg
+    b = bStates[message.from_user.id]  # ссылка, не копия, по идее. т.е. пункт списка изменться должен
+
     if message.text == '👋 Поздороваться':
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True) #создание новых кнопок
         btn1 = types.KeyboardButton('Нужно Окно')
