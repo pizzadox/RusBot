@@ -13,13 +13,24 @@ isNum  = re.compile(r'^\d{3,4}$')
 class BotState():
     State = "start" #состоние. пока строкой, но надо это обьявлять по другому
     width=0; height =0 # перенести в стуктура данных конкретного пользователя
+    def __init__(self):
+        self.State = ""
+    def __repr__(self):
+        ans = self.State + " width %d " % self.width + " height  %d " % self.height
+        return ans
 b = BotState()
 bStates = {} # bStates[userid]
 import okno #формулы от заказчика
 
+@bot.message_handler(commands=['debug'])
+def dbg(message):
+    print (bStates)
+    bot.send_message(message.from_user.id, 'DBG OK')
 @bot.message_handler(commands=['start'])
 def start(message):
-    print (message.from_user.id)  #dbg
+    if message.from_user.id not in bStates.keys():
+        bStates[message.from_user.id] = BotState()
+        print (message.from_user.id)  #dbg
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
     btn1 = types.KeyboardButton("👋 Поздороваться")
     markup.add(btn1)
@@ -27,8 +38,11 @@ def start(message):
 
 @bot.message_handler(content_types=['text'])
 def get_text_messages(message):
-    global b
- #bState=States[user_id]
+    if message.from_user.id in bStates.keys():
+        b = bStates[message.from_user.id] # ссылка, не копия, по идее. т.е. пункт списка изменться должен
+    else:
+        bStates[message.from_user.id] = BotState()
+        print (message.from_user.id)  #dbg
     if message.text == '👋 Поздороваться':
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True) #создание новых кнопок
         btn1 = types.KeyboardButton('Нужно Окно')
