@@ -10,9 +10,11 @@ bot = telebot.TeleBot('5882698434:AAEQiUxsNuWmO3tesY7IU1fE-t9fPIc9xCQ')
 import re # формат ввода размера. "размер x y" или "размер x/y"
 szPtrn = re.compile(r'размер \d{3,4}(\s+|/)\d{3,4}$')
 isNum  = re.compile(r'^\d{3,4}$')
-bState = "start" #состоние. пока строкой, но надо это обьявлять по другому
+class BotState():
+    State = "start" #состоние. пока строкой, но надо это обьявлять по другому
+    width=0; height =0 # перенести в стуктура данных конкретного пользователя
+b = BotState()
 bStates = {} # bStates[userid]
-width=0; height =0 # перенести в стуктура данных конкретного пользователя
 import okno #формулы от заказчика
 
 @bot.message_handler(commands=['start'])
@@ -25,9 +27,7 @@ def start(message):
 
 @bot.message_handler(content_types=['text'])
 def get_text_messages(message):
-    global bState
-    global width
-    global height
+    global b
  #bState=States[user_id]
     if message.text == '👋 Поздороваться':
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True) #создание новых кнопок
@@ -60,21 +60,21 @@ def get_text_messages(message):
         # Вот тут вывести
     elif isNum.match( message.text):
         num = int(message.text) # здесь точно число
-        if bState == 'get_size': # Сначала ширина
+        if b.State == 'get_size': # Сначала ширина
             bot.send_message(message.from_user.id, "ширина составила %d мм. Теперь введите высоту" % num)
-            width = num; bState = "know_width"
-        elif bState == 'know_width': # ширину знаем. теперь высоту
-            height = num; bState ='know_size'
-            otvet = okno.answer(width,height)
+            b.width = num; b.State = "know_width"
+        elif b.State == 'know_width': # ширину знаем. теперь высоту
+            b.height = num; b.State ='know_size'
+            otvet = okno.answer(b.width, b.height)
             bot.send_message(message.from_user.id,otvet)
     elif message.text == 'Знаю размер':
-        if bState != 'know_size':
+        if b.State != 'know_size':
             bot.send_message(message.from_user.id, 'Укажи размеры в поле ввода текста в Миллиметрах (размер  ширина/высота )', parse_mode='Markdown')
-            bState = "get_size"
+            b.State = "get_size"
         else:
-            otvet = okno.answer(width, height)
+            otvet = okno.answer(b.width, b.height)
             bot.send_message(message.from_user.id, otvet)
-            bState = '' # сброс на всякий случай
+            b.State = '' # сброс на всякий случай
 
 
         # обрабатываем ответы с условием
