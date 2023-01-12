@@ -19,7 +19,7 @@ import okno #формулы от заказчика
 
 @bot.message_handler(commands=['start'])
 def start(message):
-
+    print (message.from_user.id)  #dbg
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
     btn1 = types.KeyboardButton("👋 Поздороваться")
     markup.add(btn1)
@@ -49,8 +49,6 @@ def get_text_messages(message):
         bot.send_message(message.from_user.id, 'Подробно про советы по ' + '[ссылке](https://oknarus.com/#services)', parse_mode='Markdown')
 
     elif szPtrn.match( message.text): # размер число1 число2 (3-4х значные
-        # разбираем строку , вытаскиваем два числа price = (ширина+высота)*2* цена_профиля + ширина * высота* цена полотна.
-        #но надо брать формулу от заказчика
         words = message.text.split()
         a=int(words[1])
         b=int(words[2])
