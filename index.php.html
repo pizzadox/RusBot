@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Расчет</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+</head>
+<body>
+<header class="py-3 mb-3 border-bottom">
+    <div class="container-fluid d-grid gap-3 align-items-center" style="grid-template-columns: 1fr 2fr;">
+      <div class="dropdown">
+        <a href="#" class="d-flex align-items-center col-lg-4 mb-2 mb-lg-0 link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+          <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
+        </a>
+        <ul class="dropdown-menu text-small shadow">
+          <li><a class="dropdown-item active" href="#" aria-current="page">Overview</a></li>
+          <li><a class="dropdown-item" href="#">Первое</a></li>
+          <li><a class="dropdown-item" href="#">Второе</a></li>
+          <li><a class="dropdown-item" href="#">Продукты</a></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><a class="dropdown-item" href="#">Про нас</a></li>
+          <li><a class="dropdown-item" href="#">Про Горгаз</a></li>
+        </ul>
+      </div>
+
+      <div class="d-flex align-items-center">
+        <form class="w-100 me-3" role="search">
+          <input type="search" class="form-control" placeholder="Искалка..." aria-label="Search">
+        </form>
+
+        <div class="flex-shrink-0 dropdown">
+          <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+            <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
+          </a>
+          <ul class="dropdown-menu text-small shadow">
+            <li><a class="dropdown-item" href="#">Новый профиль...</a></li>
+            <li><a class="dropdown-item" href="#">Настройки</a></li>
+            <li><a class="dropdown-item" href="#">Профиль</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#">Вход/Выход</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+
+{% load django_bootstrap5 %}
+
+<form action="/url/to/submit/" method="post" class="form">
+    {% csrf_token %}
+
+    {% bootstrap_form form %}
+
+    {% bootstrap_button button_type="submit" content="OK" %}
+    {% bootstrap_button button_type="reset" content="Cancel" %}
+</form>
+<div class=" ">
+    <div class="col-12">
+  <!-- Intro settings -->
+  <style>
+    /* Default height for small devices */
+    #intro-example {
+      height: 400px;
+    }
+
+    /* Height for devices larger than 992px */
+    @media (min-width: 992px) {
+      #intro-example {
+        height: 600px;
+      }
+    }
+  </style>
+  <!-- Background image -->
+  <div
+    id="intro-example"
+    class="row p-5 text-center bg-image"
+    style="background-image: url('https://mdbcdn.b-cdn.net/img/new/slides/041.webp');"
+  >
+    <div class="mask col" style="background-color: rgba(0, 0, 0, 0.7);">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="text-white">
+          <h1 class="mb-3">Привет, тут будет весело !</h1>
+          <h5 class="mb-4">Сейчас мы с тобой погрузимся в увекателный мир!</h5>
+          <a
+            class="btn btn-outline-light btn-lg m-2"
+            href="https://"
+            role="button"
+            rel="nofollow"
+            target="_blank"
+          >Летс Гоу !</a
+          >
+          <a
+            class="btn btn-outline-light btn-lg m-2"
+            href="http://"
+            target="_blank"
+            role="button"
+          >Что за мир ?</a>
+        </div>
+          <div class="row">
+              <div class="col">
+                  <div class="input-group">
+                      <span class="input-group-text">Ширина / Высота</span>
+                      <input type="text" aria-label="know_width" class="form-control">
+                      <input type="text" aria-label="know_size" class="form-control">
+                  </div>
+                  <button class="btn btn-primary" type="button">Рассчитать</button>
+              </div>
+              <?php
+              $python =  shell_exec('C:\Program Files\Python311\python.exe D:\xampp\htdocs\py\echo_bot.py');
+              $result = system('python myscript.py myargs', $otvet);
+              <div class="col">
+                  <h2 id="#otvet" style="color:white">{otvet}</h2>
+              </div>
+          </div>
+      </div>
+    </div>
+  </div>
+  <!-- Background image -->
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+</body>
+</html>

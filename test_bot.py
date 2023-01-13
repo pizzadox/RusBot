@@ -52,7 +52,7 @@ def get_text_messages(message):
 
         # Вот тут вывести
     elif message.text == 'Знаю размер':
-        bot.send_message(message.from_user.id, 'Укажи размеры в поле ввода текста в Миллиметрах ( ширина/высота )', parse_mode='Markdown')
+        bot.send_message(message.from_user.id, 'Ширина изделия составит : ', parse_mode='Markdown')
 
 
         # обрабатываем ответы с условием

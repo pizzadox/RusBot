@@ -10,6 +10,7 @@ bot = telebot.TeleBot('5882698434:AAEQiUxsNuWmO3tesY7IU1fE-t9fPIc9xCQ')
 import re # формат ввода размера. "размер x y" или "размер x/y"
 szPtrn = re.compile(r'размер \d{3,4}(\s+|/)\d{3,4}$')
 isNum  = re.compile(r'^\d{3,4}$')
+oknoConst = re.compile(r'окно') # переходим на выбор конструкции окна
 class BotState():
     State = "start" #состоние. пока строкой, но надо это обьявлять по другому
     width=0; height =0 # перенести в стуктура данных конкретного пользователя
@@ -45,7 +46,7 @@ def get_text_messages(message):
 
     if message.text == '👋 Поздороваться':
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True) #создание новых кнопок
-        btn1 = types.KeyboardButton('Нужно Окно')
+        btn1 = types.KeyboardButton('окно')
         btn2 = types.KeyboardButton('Нужна Дверь')
         btn3 = types.KeyboardButton('Советы')
         btn4 = types.KeyboardButton('Знаю размер')
@@ -61,6 +62,16 @@ def get_text_messages(message):
 
     elif message.text == 'Советы':
         bot.send_message(message.from_user.id, 'Подробно про советы по ' + '[ссылке](https://oknarus.com/#services)', parse_mode='Markdown')
+    # выбор окна
+    elif oknoConst.match(message.text):
+        oknoConstr = []
+        oknoConstr = okno.window
+        print(okno.window)
+        name = oknoConstr[0]
+        description = okno.window(1)
+        image = okno.window(2)
+        print(name, description, image, oknoConstr)
+        bot.send_message(message.from_user.id, 'Считаем Окно', parse_mode='Markdown')
 
     elif szPtrn.match( message.text): # размер число1 число2 (3-4х значные
         words = message.text.split()
@@ -73,7 +84,7 @@ def get_text_messages(message):
     elif isNum.match( message.text):
         num = int(message.text) # здесь точно число
         if b.State == 'get_size': # Сначала ширина
-            bot.send_message(message.from_user.id, "ширина составила %d мм. Теперь введите высоту" % num)
+            bot.send_message(message.from_user.id, "Ширина составила %d мм. Теперь введите высоту" % num)
             b.width = num; b.State = "know_width"
         elif b.State == 'know_width': # ширину знаем. теперь высоту
             b.height = num; b.State ='know_size'
@@ -81,7 +92,7 @@ def get_text_messages(message):
             bot.send_message(message.from_user.id,otvet)
     elif message.text == 'Знаю размер':
         if b.State != 'know_size':
-            bot.send_message(message.from_user.id, 'Укажи размеры в поле ввода текста в Миллиметрах (размер  ширина/высота )', parse_mode='Markdown')
+            bot.send_message(message.from_user.id, 'Ширина составит :', parse_mode='Markdown')
             b.State = "get_size"
         else:
             otvet = okno.answer(b.width, b.height)
