@@ -2,29 +2,20 @@
 import sqlite3
 
 # Делам выборку из бд - какие считать окна
-def window(row_size):
-    try:
-        sqlite_connection = sqlite3.connect('orders.db')
-        cursor = sqlite_connection.cursor()
-        # Далее нужно в запрос сформировать как :
-        # SELECT name, description, img
-        # FROM constructions
-        # WHERE group_id = 'Значение переменной раздела запрашиваемого пользователем'
-        sqlite_select_query = """SELECT name, description, img FROM constructions """
-        cursor.execute(sqlite_select_query)
-        window = []
-        window = cursor.fetchmany(row_size)
-        #for row in window:
-            #print('Название:', row[0])
-            #print('Описание:', row[1])
-            #print('Изображение: ', row[2])
-        cursor.close()
-    finally:
-        if sqlite_connection:
-            sqlite_connection.close()
-            #print("Соединение с SQLite закрыто")
-window(4)
-
+def window(row):
+        conn = sqlite3.connect("orders.db")
+        window = conn.cursor()
+            # Далее нужно в запрос сформировать как :
+            # SELECT name, description, img
+            # FROM constructions
+            # WHERE group_id = 'Значение переменной раздела запрашиваемого пользователем'
+        window.executemany("SELECT * FROM constructions")
+        print(window.fetchone())
+        for row in window.executemany("SELECT name, description, img FROM constructions"):
+            print('Название:', row[0])
+            print('Описание:', row[1])
+            print('Изображение: ', row[2])
+        conn.close()
 # Определяем переменные конструкции
 # Следуюие данные берем у клиента в файле echo_bot
 height = 100

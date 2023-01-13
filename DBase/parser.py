@@ -2,7 +2,7 @@
 import csv
 import sqlite3
 
-connection = sqlite3.connect('../DBase/PriceList/alumark_s44.db')
+connection = sqlite3.connect('Bases/Alumark/alumark_s44.db')
 
 cursor = connection.cursor()
 

@@ -66,9 +66,8 @@ def get_text_messages(message):
     elif oknoConst.match(message.text):
         oknoConstr = []
         oknoConstr = okno.window
-        print(oknoConstr)
-
-        name = oknoConstr[0]
+        print(oknoConstr(0))
+        name = oknoConstr(0)
         description = okno.window(1)
         image = okno.window(2)
         print(name, description, image, oknoConstr)
