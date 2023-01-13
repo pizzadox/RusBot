@@ -4,7 +4,7 @@ import sqlite3
 # Делам выборку из бд - какие считать окна
 def window(row):
         conn = sqlite3.connect("orders.db")
-        window = conn.cursor()
+        window = conn.cursor();ans = []
             # Далее нужно в запрос сформировать как :
             # SELECT name, description, img
             # FROM constructions
@@ -15,7 +15,9 @@ def window(row):
             print('Название:', row[0])
             print('Описание:', row[1])
             print('Изображение: ', row[2])
+            ans.append(row)
         conn.close()
+        return ans
 # Определяем переменные конструкции
 # Следуюие данные берем у клиента в файле echo_bot
 height = 100
