@@ -2,18 +2,21 @@
 import sqlite3
 
 # Делам выборку из бд - какие считать окна
-
-conn = sqlite3.connect("orders.db")
-window = conn.cursor()
+def window(row):
+        conn = sqlite3.connect("orders.db")
+        window = conn.cursor()
             # Далее нужно в запрос сформировать как :
             # SELECT name, description, img
             # FROM constructions
             # WHERE group_id = 'Значение переменной раздела запрашиваемого пользователем'
-print(window.fetchone())
-for window in window.execute("SELECT * FROM constructions"):
-    print(window[1])
-conn.close()
-        # Определяем переменные конструкции
+        window.execute("SELECT * FROM constructions")
+        print(window.fetchone())
+        for row in window.execute("SELECT name, description, img FROM constructions"):
+            print('Название:', row[0])
+            print('Описание:', row[1])
+            print('Изображение: ', row[2])
+        conn.close()
+# Определяем переменные конструкции
 # Следуюие данные берем у клиента в файле echo_bot
 height = 100
 width = 200
