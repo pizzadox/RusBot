@@ -67,6 +67,7 @@ def get_text_messages(message):
         oknoConstr = []
         oknoConstr = okno.window
         print(oknoConstr)
+
         name = oknoConstr[0]
         description = okno.window(1)
         image = okno.window(2)
