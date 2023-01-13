@@ -12,6 +12,7 @@ def window(row_size):
         # WHERE group_id = 'Значение переменной раздела запрашиваемого пользователем'
         sqlite_select_query = """SELECT name, description, img FROM constructions """
         cursor.execute(sqlite_select_query)
+        window = []
         window = cursor.fetchmany(row_size)
         #for row in window:
             #print('Название:', row[0])
