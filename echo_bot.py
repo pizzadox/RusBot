@@ -1,3 +1,5 @@
+import json
+
 import telebot
 from telebot import types
 
@@ -14,6 +16,7 @@ oknoConst = re.compile(r'окно') # переходим на выбор кон�
 class BotState():
     State = "start" #состоние. пока строкой, но надо это обьявлять по другому
     width=0; height =0 # перенести в стуктура данных конкретного пользователя
+    construction_id = 0; #orders.db construction id
     def __init__(self):
         self.State = ""
     def __repr__(self):
@@ -63,15 +66,21 @@ def get_text_messages(message):
     elif message.text == 'Советы':
         bot.send_message(message.from_user.id, 'Подробно про советы по ' + '[ссылке](https://oknarus.com/#services)', parse_mode='Markdown')
     # выбор окна
-    elif oknoConst.match(message.text):
+    elif oknoConst.match(message.text): #окно
         oknoConstr = []
-        oknoConstr = okno.window
-        print(oknoConstr(0))
-        name = oknoConstr(0)
-        description = okno.window(1)
-        image = okno.window(2)
-        print(name, description, image, oknoConstr)
-        bot.send_message(message.from_user.id, 'Считаем Окно', parse_mode='Markdown')
+        oknoConstr = okno.window(1)
+        print(oknoConstr)
+        markup = types.InlineKeyboardMarkup()
+        for r in oknoConstr:
+            name = r[0]
+            description = r[1]
+            image = r[2]
+            #markup.add(str(r[0]))
+            markup.add( types.InlineKeyboardButton(text=r[0] , callback_data = '{"user_id": %d,' % message.from_user.id + '"okno": %d}' % r[3]))
+            print(r[1])
+        bot.send_message(message.from_user.id, "Выиурите тип",reply_markup=markup)
+        # print(name, description, image)
+        #bot.send_message(message.from_user.id, 'Считаем Окно %s' % name, parse_mode='Markdown')
 
     elif szPtrn.match( message.text): # размер число1 число2 (3-4х значные
         words = message.text.split()
@@ -101,4 +110,13 @@ def get_text_messages(message):
 
 
         # обрабатываем ответы с условием
+
+@bot.callback_query_handler(func=lambda call: True) #вешаем обработчик событий на нажатие всех inline-кнопок
+def callback_inline(call):
+    if call.data: #//проверяем есть ли данные если да, далаем с ними что-то.
+        print(call.data, call.id )
+        cb=json.loads(call.data)
+        print(cb['user_id'])
+    bot.answer_callback_query(call.id, "Answer is Yes")
+
 bot.polling(none_stop=True, interval=0) #не отключаемся после ответа
