@@ -56,7 +56,6 @@ def get_text_messages(message):
         markup.add(btn1, btn2, btn3, btn4)
         bot.send_message(message.from_user.id, '❓ Задайте интересующий вас вопрос', reply_markup=markup) #ответ бота
 
-
     elif message.text == 'Нужно Окно':
         bot.send_message(message.from_user.id, 'Вы уверены что понимаете что вам нужно ?\n \nПолный текст можно прочитать по ' + '[ссылке](https://oknarus.com/tpost/mclj26nlh1-zaklinilo-okno-chto-delat)', parse_mode='Markdown')
 
@@ -75,11 +74,9 @@ def get_text_messages(message):
             name = r[0]
             description = r[1]
             image = r[2]
-            #markup.add(str(r[0]))
             markup.add( types.InlineKeyboardButton(text=r[0] , callback_data = '{"user_id": %d,' % message.from_user.id + '"okno": %d}' % r[3]))
             print(r[1])
         bot.send_message(message.from_user.id, "Выиурите тип",reply_markup=markup)
-        # print(name, description, image)
         #bot.send_message(message.from_user.id, 'Считаем Окно %s' % name, parse_mode='Markdown')
 
     elif szPtrn.match( message.text): # размер число1 число2 (3-4х значные
@@ -117,11 +114,12 @@ def callback_inline(call):
         print(call.data, call.id )
         cb=json.loads(call.data)
         if cb['user_id'] in bStates.keys():
-            print("callback for " + cb['user_id'])
+            print("callback for %d" % cb['user_id'])
             constr_id= int( cb['okno'] )
             print (constr_id)
-            bStates[cb['user_id']] = constr_id
-            bStates[cb['user_id']].State = "get_tip"
+            b = bStates[cb['user_id']]
+            b.construction_id = constr_id
+            b.State = "get_tip"
 
     bot.answer_callback_query(call.id, "Answer is Yes")
 

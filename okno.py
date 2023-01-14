@@ -12,9 +12,6 @@ def window(row):
         window.execute("SELECT * FROM constructions")
         print(window.fetchone())
         for row in window.execute("SELECT name, description, img, id FROM constructions"):
-            print('Название:', row[0])
-            print('Описание:', row[1])
-            print('Изображение: ', row[2])
             ans.append(row)
         conn.close()
         return ans
