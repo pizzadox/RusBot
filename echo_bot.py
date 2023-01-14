@@ -116,7 +116,13 @@ def callback_inline(call):
     if call.data: #//проверяем есть ли данные если да, далаем с ними что-то.
         print(call.data, call.id )
         cb=json.loads(call.data)
-        print(cb['user_id'])
+        if cb['user_id'] in bStates.keys():
+            print("callback for " + cb['user_id'])
+            constr_id= int( cb['okno'] )
+            print (constr_id)
+            bStates[cb['user_id']] = constr_id
+            bStates[cb['user_id']].State = "get_tip"
+
     bot.answer_callback_query(call.id, "Answer is Yes")
 
 bot.polling(none_stop=True, interval=0) #не отключаемся после ответа
