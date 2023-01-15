@@ -67,7 +67,7 @@ def get_text_messages(message):
     # выбор окна
     elif oknoConst.match(message.text): #окно
         oknoConstr = []
-        oknoConstr = okno.window(1)
+        oknoConstr = okno.window()
         print(oknoConstr)
         markup = types.InlineKeyboardMarkup()
         for r in oknoConstr:
@@ -84,9 +84,7 @@ def get_text_messages(message):
         a=int(words[1])
         b=int(words[2])
         otvet = okno.answer(a,b)
-        # from okno import window_filling on begin this file
-        bot.send_message(message.from_user.id,  "___\n"  + otvet)
-        # Вот тут вывести
+        bot.send_message(message.from_user.id,   otvet)
     elif isNum.match( message.text):
         num = int(message.text) # здесь точно число
         if b.State == 'get_size': # Сначала ширина

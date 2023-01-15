@@ -2,19 +2,16 @@
 import sqlite3
 
 # Делам выборку из бд - какие считать окна
-def window(row):
-        conn = sqlite3.connect("orders.db")
-        window = conn.cursor();ans = []
-            # Далее нужно в запрос сформировать как :
-            # SELECT name, description, img
-            # FROM constructions
-            # WHERE group_id = 'Значение переменной раздела запрашиваемого пользователем'
-        window.execute("SELECT * FROM constructions")
-        print(window.fetchone())
+def window(c_id = 0, g_id=0):
+    """  *Выбирает окна по id конструкции, id группы, либо просто показывает все доступные
+    возращает(name, description, img_name, construction_id), либо их список """
+    conn = sqlite3.connect("orders.db")
+    window = conn.cursor();ans = []
+    if ( not  c_id) and (not g_id): # пока только список всех конструкций
         for row in window.execute("SELECT name, description, img, id FROM constructions"):
             ans.append(row)
         conn.close()
-        return ans
+    return ans
 # Определяем переменные конструкции
 # Следуюие данные берем у клиента в файле echo_bot
 height = 100
