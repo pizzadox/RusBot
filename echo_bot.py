@@ -22,6 +22,11 @@ class BotState():
     def __repr__(self):
         ans = self.State + " width %d " % self.width + " height  %d " % self.height
         return ans
+def mrkpMenu(*btns): # Меню с кнопкапи. Заголовки кнопок через запятую
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True) #создание новых кнопок
+    for label in btns:
+       markup.add(label)
+    return markup
 b = BotState()
 bStates = {} # bStates[userid]
 import okno #формулы от заказчика
@@ -42,11 +47,7 @@ def start(message):
 
 @bot.message_handler(content_types=['text'])
 def get_text_messages(message):
-    def mrkpMenu(*btns): # Меню с кнопкапи. Заголовки кнопок через запятую
-        markup = types.ReplyKeyboardMarkup(resize_keyboard=True) #создание новых кнопок
-        for label in btns:
-            markup.add(label)
-        return markup
+
     if message.from_user.id not in bStates.keys():
         bStates[message.from_user.id] = BotState()
         print (message.from_user.id)  #dbg
@@ -91,7 +92,7 @@ def get_text_messages(message):
         elif b.State == 'know_width': # ширину знаем. теперь высоту
             b.height = num; b.State ='know_size'
             otvet = okno.answer(b.width, b.height)
-            bot.send_message(message.from_user.id,otvet)
+            bot.send_message(message.from_user.id,otvet,reply_markup=mrkpMenu('Расчёт','окно')) # не всегда обе
     elif message.text == 'Знаю размер':
         if b.State != 'know_size':
             bot.send_message(message.from_user.id, 'Ширина составит :', parse_mode='Markdown')
@@ -103,7 +104,15 @@ def get_text_messages(message):
 
 
         # обрабатываем ответы с условием
-
+    elif message.text == 'Расчёт':
+        ans1 = "Окно шириной %d мм" % b.width + " шириной %d мм " %b.height  +  "типа № %d \n" % b.construction_id
+        if (b.height and b.width and b.construction_id):
+            ans2 = okno.answer(b.width, b.height)
+            markup = mrkpMenu('Поздравляю')
+        else:
+            ans2 = 'Недостаточно данных'
+            markup = mrkpMenu('Знаю размер','окно')
+        bot.send_message(message.from_user.id,ans1 + ans2,reply_markup=markup)
 @bot.callback_query_handler(func=lambda call: True) #вешаем обработчик событий на нажатие всех inline-кнопок
 def callback_inline(call):
     if call.data: #//проверяем есть ли данные если да, далаем с ними что-то.
@@ -117,6 +126,7 @@ def callback_inline(call):
             b = bStates[cb['user_id']]
             b.construction_id = constr_id
             b.State = "get_tip"
+            bot.send_message(cb['user_id'],"Тратата!",reply_markup=mrkpMenu('Расчёт',"Знаю размер")) #не всегда обе
     bot.answer_callback_query(call.id, ans)
 
 bot.polling(none_stop=True, interval=0) #не отключаемся после ответа
