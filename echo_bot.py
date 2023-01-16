@@ -10,13 +10,13 @@ from telebot import types
 bot = telebot.TeleBot('5882698434:AAEQiUxsNuWmO3tesY7IU1fE-t9fPIc9xCQ')
 
 import re # формат ввода размера. "размер x y" или "размер x/y"
-szPtrn = re.compile(r'размер \d{3,4}(\s+|/)\d{3,4}$')
+szPtrn = re.compile(r'(^размер\s+|^\s*)(\d{3,4})(\s+|/)(\d{3,4})\s*$')
 isNum  = re.compile(r'^\d{3,4}$')
 oknoConst = re.compile(r'окно') # переходим на выбор конструкции окна
 class BotState():
     State = "start" #состоние. пока строкой, но надо это обьявлять по другому
     width=0; height =0 # перенести в стуктура данных конкретного пользователя
-    construction_id = 0; #orders.db construction id
+    construction_id = 0 #orders.db construction id
     def __init__(self):
         self.State = ""
     def __repr__(self):
@@ -79,10 +79,8 @@ def get_text_messages(message):
         bot.send_message(message.from_user.id, "Выиурите тип",reply_markup=markup)
         #bot.send_message(message.from_user.id, 'Считаем Окно %s' % name, parse_mode='Markdown')
 
-    elif szPtrn.match( message.text): # размер число1 число2 (3-4х значные
-        words = message.text.split()
-        a=int(words[1])
-        b=int(words[2])
+    elif mt := szPtrn.match( message.text): # (размер )(число1) () (число2) (3-4х значные
+        a = int( mt.group(2) );b=int(mt.group(4))
         otvet = okno.answer(a,b)
         bot.send_message(message.from_user.id,   otvet)
     elif isNum.match( message.text):
