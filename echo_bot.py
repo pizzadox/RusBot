@@ -42,18 +42,18 @@ def start(message):
 
 @bot.message_handler(content_types=['text'])
 def get_text_messages(message):
+    def mrkpMenu(*btns): # Меню с кнопкапи. Заголовки кнопок через запятую
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True) #создание новых кнопок
+        for label in btns:
+            markup.add(label)
+        return markup
     if message.from_user.id not in bStates.keys():
         bStates[message.from_user.id] = BotState()
         print (message.from_user.id)  #dbg
     b = bStates[message.from_user.id]  # ссылка, не копия, по идее. т.е. пункт списка изменться должен
 
     if message.text == '👋 Поздороваться':
-        markup = types.ReplyKeyboardMarkup(resize_keyboard=True) #создание новых кнопок
-        btn1 = types.KeyboardButton('окно')
-        btn2 = types.KeyboardButton('Нужна Дверь')
-        btn3 = types.KeyboardButton('Советы')
-        btn4 = types.KeyboardButton('Знаю размер')
-        markup.add(btn1, btn2, btn3, btn4)
+        markup = mrkpMenu('окно','Нужна Дверь','Советы','Знаю размер')
         bot.send_message(message.from_user.id, '❓ Задайте интересующий вас вопрос', reply_markup=markup) #ответ бота
 
     elif message.text == 'Нужно Окно':
@@ -109,14 +109,14 @@ def callback_inline(call):
     if call.data: #//проверяем есть ли данные если да, далаем с ними что-то.
         print(call.data, call.id )
         cb=json.loads(call.data)
+        ans = "Callback is working!"
         if cb['user_id'] in bStates.keys():
             print("callback for %d" % cb['user_id'])
             constr_id= int( cb['okno'] )
-            print (constr_id)
+            print (constr_id);ans = "Вы выбрали конструкцию ID %d" % constr_id
             b = bStates[cb['user_id']]
             b.construction_id = constr_id
             b.State = "get_tip"
-
-    bot.answer_callback_query(call.id, "Answer is Yes")
+    bot.answer_callback_query(call.id, ans)
 
 bot.polling(none_stop=True, interval=0) #не отключаемся после ответа
