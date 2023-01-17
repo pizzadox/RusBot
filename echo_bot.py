@@ -78,7 +78,7 @@ def get_text_messages(message):
             image = r[2]
             markup.add( types.InlineKeyboardButton(text=r[0] , callback_data = '{"user_id": %d,' % message.from_user.id + '"okno": %d}' % r[3]))
             print(r[1])
-        bot.send_message(message.from_user.id, "Выиурите тип",reply_markup=markup)
+        bot.send_message(message.from_user.id, "Выберите тип",reply_markup=markup)
         #bot.send_message(message.from_user.id, 'Считаем Окно %s' % name, parse_mode='Markdown')
 
     elif mt := szPtrn.match( message.text): # (размер )(число1) () (число2) (3-4х значные
