@@ -7,7 +7,8 @@ from telebot import types
 
 # Подключаем модуль обработки ( не факт что тут, так как будeт скорее всего отдельным файлом расписано для каждого вида профиля и типа конструкии
 
-bot = telebot.TeleBot('5882698434:AAEQiUxsNuWmO3tesY7IU1fE-t9fPIc9xCQ')
+#bot = telebot.TeleBot('5882698434:AAEQiUxsNuWmO3tesY7IU1fE-t9fPIc9xCQ') # Сам бот (https://t.me/constr_cost_bot)
+bot = telebot.TeleBot('5902635400:AAEpItMj0ilZBgrisgJdYbtfULZXkLJDkRs') # Тестовый бот (https://t.me/constrcosttest_bot)
 
 import re # формат ввода размера. "размер x y" или "размер x/y"
 szPtrn = re.compile(r'(^размер\s+|^\s*)(\d{3,4})(\s+|/)(\d{3,4})\s*$')

@@ -82,4 +82,3 @@ def answer(width, height):
 
 #if __name__ == '__main__':
     print (answer(width,height))
-
