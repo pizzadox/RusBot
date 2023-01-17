@@ -105,7 +105,7 @@ def get_text_messages(message):
 
         # обрабатываем ответы с условием
     elif message.text == 'Расчёт':
-        ans1 = "Окно шириной %d мм" % b.width + " шириной %d мм " %b.height  +  "типа № %d \n" % b.construction_id
+        ans1 = "Окно шириной %d мм" % b.width + " высотой %d мм " %b.height  +  "типа № %d \n" % b.construction_id
         if (b.height and b.width and b.construction_id):
             ans2 = okno.answer(b.width, b.height)
             markup = mrkpMenu('Поздравляю')
