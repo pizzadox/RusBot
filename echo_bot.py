@@ -7,8 +7,7 @@ from telebot import types
 
 # Подключаем модуль обработки ( не факт что тут, так как будeт скорее всего отдельным файлом расписано для каждого вида профиля и типа конструкии
 
-#bot = telebot.TeleBot('5882698434:AAEQiUxsNuWmO3tesY7IU1fE-t9fPIc9xCQ') # Сам бот (https://t.me/constr_cost_bot)
-bot = telebot.TeleBot('5902635400:AAEpItMj0ilZBgrisgJdYbtfULZXkLJDkRs') # Тестовый бот (https://t.me/constrcosttest_bot)
+bot = telebot.TeleBot('5882698434:AAEQiUxsNuWmO3tesY7IU1fE-t9fPIc9xCQ')
 
 import re # формат ввода размера. "размер x y" или "размер x/y"
 szPtrn = re.compile(r'(^размер\s+|^\s*)(\d{3,4})(\s+|/)(\d{3,4})\s*$')
@@ -70,15 +69,14 @@ def get_text_messages(message):
     elif oknoConst.match(message.text): #окно
         oknoConstr = []
         oknoConstr = okno.window()
-        print(oknoConstr)
+        #print(oknoConstr)
         markup = types.InlineKeyboardMarkup()
         for r in oknoConstr:
             name = r[0]
             description = r[1]
             image = r[2]
             markup.add( types.InlineKeyboardButton(text=r[0] , callback_data = '{"user_id": %d,' % message.from_user.id + '"okno": %d}' % r[3]))
-            print(r[1])
-        bot.send_message(message.from_user.id, "Выберите тип",reply_markup=markup)
+        bot.send_message(message.from_user.id, "Выиурите тип",reply_markup=markup)
         #bot.send_message(message.from_user.id, 'Считаем Окно %s' % name, parse_mode='Markdown')
 
     elif mt := szPtrn.match( message.text): # (размер )(число1) () (число2) (3-4х значные
