@@ -1,4 +1,4 @@
-import json
+import json,sqlite3
 
 import telebot
 from telebot import types
@@ -7,8 +7,8 @@ from telebot import types
 
 # Подключаем модуль обработки ( не факт что тут, так как будeт скорее всего отдельным файлом расписано для каждого вида профиля и типа конструкии
 
-#bot = telebot.TeleBot('5882698434:AAEQiUxsNuWmO3tesY7IU1fE-t9fPIc9xCQ') # Сам бот (https://t.me/constr_cost_bot)
-bot = telebot.TeleBot('5902635400:AAEpItMj0ilZBgrisgJdYbtfULZXkLJDkRs') # Тестовый бот (https://t.me/constrcosttest_bot)
+bot = telebot.TeleBot('5882698434:AAEQiUxsNuWmO3tesY7IU1fE-t9fPIc9xCQ') # Сам бот (https://t.me/constr_cost_bot)
+#bot = telebot.TeleBot('5902635400:AAEpItMj0ilZBgrisgJdYbtfULZXkLJDkRs') # Тестовый бот (https://t.me/constrcosttest_bot)
 
 import re # формат ввода размера. "размер x y" или "размер x/y"
 szPtrn = re.compile(r'(^размер\s+|^\s*)(\d{3,4})(\s+|/)(\d{3,4})\s*$')
@@ -20,26 +20,66 @@ class BotState():
     construction_id = 0 #orders.db construction id
     def __init__(self):
         self.State = ""
+    def __init__(self,width:int,heigh:int,construction_id:int):
+        self.width = width; self.height = heigh; self.construction_id = construction_id
+    def __init__(self,width:int,height:int,construction_id:int,State:str):
+        self.width = width
+        self.height = height
+        self.construction_id = construction_id
+        self.State = State
     def __repr__(self):
-        ans = self.State + " width %d " % self.width + " height  %d " % self.height
+        ans = "%d, " % self.width + "%d, " % self.height + '%d, "'%self.construction_id + self.State + '"'
         return ans
 def mrkpMenu(*btns): # Меню с кнопкапи. Заголовки кнопок через запятую
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True) #создание новых кнопок
     for label in btns:
        markup.add(label)
     return markup
-b = BotState()
-bStates = {} # bStates[userid]
+#b = BotState()
+from collections import UserDict
+class cbStates(UserDict):
+    conn=""
+    def __init__(self):
+        super().__init__()
+        #open db
+        self.conn = sqlite3.connect("bstates.db", check_same_thread=False)
+        #self.bd  = conn.cursor();ans = []
+        aa = self.conn.execute('SELECT user_id, width, height, construction_id, State  FROM users ' )
+        ans = aa.fetchall()
+        for a in ans:
+            id = int(a[0])
+            width =int( a[1])
+            height  = int(a[2])
+            constr_id = int(a[3])
+            State = a[4]
+            print ("load from bd id %d"%id)
+            self.data[id] = BotState(width, height, constr_id, State)
+
+    def save(self,id=0):
+        if not id: #сохраняем весь словарь
+            self.conn.execute('DELETE FROM users') # очищаем таблицу !!
+            self.conn.commit()
+            for id in bStates.keys():
+                b = bStates[id]
+                aa = self.conn.execute('INSERT INTO users (user_id, width, height, construction_id, State) VALUES (' +"%d,"%id + b.__repr__() +')')
+                self.conn.commit()
+
+    def __del__(self):
+        self.save()
+        self.conn.close()
+
+bStates = cbStates() # bStates[userid]  конструктор
 import okno #формулы от заказчика
 
 @bot.message_handler(commands=['debug'])
 def dbg(message):
     print (bStates)
     bot.send_message(message.from_user.id, 'DBG OK')
+    bStates.save()
 @bot.message_handler(commands=['start'])
 def start(message):
     if message.from_user.id not in bStates.keys():
-        bStates[message.from_user.id] = BotState()
+        bStates[message.from_user.id] = BotState(0,0,0,"") #!!
         print (message.from_user.id)  #dbg
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
     btn1 = types.KeyboardButton("👋 Поздороваться")
@@ -50,7 +90,7 @@ def start(message):
 def get_text_messages(message):
 
     if message.from_user.id not in bStates.keys():
-        bStates[message.from_user.id] = BotState()
+        bStates[message.from_user.id] = BotState(0,0,0,"") #!!
         print (message.from_user.id)  #dbg
     b = bStates[message.from_user.id]  # ссылка, не копия, по идее. т.е. пункт списка изменться должен
 
@@ -109,7 +149,8 @@ def get_text_messages(message):
         ans1 = "Окно шириной %d мм" % b.width + " высотой %d мм " %b.height  +  "типа № %d \n" % b.construction_id
         if (b.height and b.width and b.construction_id):
             ans2 = okno.answer(b.width, b.height)
-            markup = mrkpMenu('Поздравляю')
+            markup = mrkpMenu('Поздравляю') # строчку ниже хорошо аеренести на такую кнопку
+            #bStates.save(message.from_user.id)
         else:
             ans2 = 'Недостаточно данных'
             markup = mrkpMenu('Знаю размер','окно')
