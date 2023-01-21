@@ -100,7 +100,8 @@ def get_text_messages(message):
         else:
             otvet = okno.answer(b.width, b.height)
             bot.send_message(message.from_user.id, otvet)
-            b.State = ''  # сброс на всякий случай
+            b.State = 'all_know'  # сброс на всякий случай
+            bStates.save(message.from_user.id) # пытаемся сохранить текущую запись.
 
 
         # обрабатываем ответы с условием
