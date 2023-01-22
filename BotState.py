@@ -39,8 +39,8 @@ class cbStates(UserDict):
         if not id: #сохраняем весь словарь
             self.conn.execute('DELETE FROM users') # очищаем таблицу !!
             self.conn.commit()
-            for id in bStates.keys():
-                b = bStates[id]
+            for id in self.data.keys():
+                b = self.data[id]
                 aa = self.conn.execute('INSERT INTO users (user_id, width, height, construction_id, State) VALUES (' +"%d,"%id + b.__repr__() +')')
                 self.conn.commit()
 
