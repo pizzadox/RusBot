@@ -51,6 +51,7 @@ def get_text_messages(message):
     if message.text == '👋 Поздороваться':
         markup = mrkpMenu('окно', 'Нужна Дверь', 'Советы', 'Знаю размер')
         bot.send_message(message.from_user.id, '❓ Задайте интересующий вас вопрос', reply_markup=markup)  # ответ бота
+        bot.send_photo(message.from_user.id, photo = open("big_russian_cat.jpeg", 'rb'))
 
     elif message.text == 'Нужно Окно':
         bot.send_message(message.from_user.id,
