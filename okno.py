@@ -11,6 +11,11 @@ def window(c_id = 0, g_id=0):
         for row in window.execute("SELECT name, description, img, id FROM constructions"):
             ans.append(row)
         conn.close()
+    elif c_id and not g_id:
+        a = window.execute("SELECT name, description, img, id FROM constructions WHERE id = ?", (c_id,))
+        r = a.fetchone()
+        print(r); ans = r
+        conn.close()
     return ans
 # Определяем переменные конструкции
 # Следуюие данные берем у клиента в файле echo_bot
