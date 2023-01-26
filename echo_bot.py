@@ -131,6 +131,8 @@ def callback_inline(call):
             b = bStates[cb['user_id']]
             b.construction_id = constr_id
             b.State = "get_tip"
+            img_name = okno.window(c_id = constr_id)[2]
+            bot.send_photo(cb['user_id'], photo = open(img_name,'rb'))
             bot.send_message(cb['user_id'],"Тратата!",reply_markup=mrkpMenu('Расчёт',"Знаю размер")) #не всегда обе
     bot.answer_callback_query(call.id, ans)
 
